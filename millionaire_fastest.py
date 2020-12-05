@@ -1,74 +1,102 @@
 """
-Сумасшедший богач
-Один сумасшедший богач на старости лет впал в маразм и стал еще более сумасшедшим. Он решил отдать половину своих богатств тому, кто выиграет в математической игре.
+Суть алгоритма заключается в том, что мы рассматриваем задачу с точки зрения построения заданного двоичного числа из 0 с помощью операций сдвига влево (dbl), +1 (inc) и -1 (dec).
+Для N подряд идущих единиц оптимальной стратегией будет inc dbl (N раз) dec, когда N>=3. Или (inc dbl) (N раз) для 0<N<3.
+Но есть исключения. Например для последовательности 111011 оптимальной стратегией будет inc dbl dbl dbl dbl dec dbl dbl dec.
+То есть на оптимальную стратегию получения последовательности единиц влияет предшествующие биты. Поэтому и возникает столько много ситуаций.
 
-Правила игры: изначально каждый игрок начинает с нулевой суммой. Он может либо получить у богача 1 миллион сантиков, либо отдать ему 1 миллион сантиков, либо получить от богача ту же сумму, которая есть у него сейчас.
-
-Выигрывает тот, кто за минимальное количество действий наберет сумму, равную половине состояния богача.
-
-На беду других игроков, нашелся человек, который что-то слышал про жадные алгоритмы и двоичную систему счисления (возможно это вы).
-
-Формат входных данных
-В стандартном потоке записано единственное натуральное число - размер половины состояния богача (в миллионах).
-
-Формат результата
-Каждая строка выхода содержит ровно одну операцию (inc, dec или dbl) из кратчайшей последовательности действий для победы.
-
-Результат работы программы выводится в стандартный поток вывода.
-
-Примеры
-Входные данные
-23
-
-Результат работы
-inc
-dbl
-inc
-dbl
-dbl
-dbl
-dec
-
-Суть алгоритма заключается в том, что мы рассматриваем задачу с точки зрения построения заданного двоичного числа из 0 с помощью операций сдвига влево на бит, +1 и -1.
-Для последовательности подряд идущих единиц 1...1 оптимальной стратегией будет +1 *2...*2 -1 для последовательностей длинее четырёх единиц.
-Для X111 оптимальны +1 *2 +1 *2 +1 и +1 *2 *2 *2 -1, но тестирующая система предпочитает первый вариант, когда на входе 111 и второй вариант, когда на входе X111, где X>0
-Для X11 ситуация аналогичная. Поэтому нужен флаг firstOne, который отслеживает X.
-Сложность алгоритма O(N), где N - длина двоичной записи исходного числа
+Вычислительная сложность O(N), где N - длина двоичной записи исходного числа.
+Сложность по памяти O(1). Т.е. дополнительной памяти для работы алгоритма не требуется.
+Реализация эффективнее, чем O(N) невозможна, т.к. для точного решения требуется пройти каждый бит числа хотя бы раз.
 """
-
 def printBestSequence(target):
-    def processOnes():
-        if consequentOnes >= 4 or not firstOne and consequentOnes >= 2:
-            print('inc')
-            print('dbl\n'*consequentOnes,end="")
-            print('dec')
-        else:
-            if firstOne:
-                print('inc')
-                print('dbl\ninc\n'*(consequentOnes-1),end='')
-            else:
-                print('dbl\ninc\n'*consequentOnes,end='')
-        
     if target <=0:
         return
     
-    consequentOnes=0
-    consequentZeros=0
-    firstOne=True
+    consequentOnes = 0
+    consequentZeros = 0
+    flagLeadOne = True
+    flagDecDblSequence = False
+    
     for length in range(target.bit_length() - 1,-1,-1):
-        if target >> length & 1:
-            if consequentZeros!=0:
-                print('dbl\n'*consequentZeros,end='')
-                consequentZeros = 0
-            consequentOnes+=1
-        else:
-            if consequentOnes!=0:
-                processOnes()
-                consequentOnes = 0
-                firstOne = False
-            consequentZeros+=1
+        if (target >> length & 1) == 0:
+            consequentZeros += 1
+            continue
         
-    if consequentOnes!=0:
-        processOnes()
+        if consequentZeros == 0:
+            consequentOnes += 1
+            continue
+        
+        if flagDecDblSequence:
+            if consequentZeros == 1:
+                # Один ноль между последовательностями => Продолжаем
+                print('dbl\n' * (consequentOnes + 1),end="")
+                print('dec')
+                
+                consequentZeros = 0
+                consequentOnes = 1
+                continue
+            else:
+                # Заканчиваем последовательность
+                print('dbl\n' * consequentOnes,end="")
+                print('dec')
+                flagDecDblSequence = False
+        else:
+            if consequentOnes >= 3:
+                print('inc')
+                flagLeadOne = False
+                if consequentZeros == 1:
+                    print('dbl\n'*(consequentOnes+1),end="")
+                    print('dec')
+                    flagDecDblSequence = True
+                    
+                    consequentZeros = 0
+                    consequentOnes = 1
+                    continue
+                else:
+                    print('dbl\n'*consequentOnes,end="")
+                    print('dec')
+            elif flagLeadOne:
+                if consequentOnes == 2:
+                    print('inc\ndbl\ninc')
+                else:
+                    print('inc')
+                flagLeadOne = False
+            else:
+                if (consequentOnes == 2) and (consequentZeros==1):
+                    flagDecDblSequence = True
+                    print('inc','dbl','dbl','dbl','dec',sep="\n")
+                    
+                    consequentOnes = 1
+                    consequentZeros = 0
+                    continue;
+                else:
+                    print('dbl\ninc\n'*consequentOnes,end='')
+
+        print('dbl\n'*consequentZeros,end='')
+
+        consequentOnes = 1
+        consequentZeros = 0
+    #end for
+    
+    # Обрабатываем последние 1..10..0
+    if flagDecDblSequence:
+        print('dbl\n' * consequentOnes,end="")
+        print('dec')
+    else:
+        if consequentOnes >= 3:
+            print('inc')
+            print('dbl\n'*consequentOnes,end="")
+            print('dec')
+        elif flagLeadOne:
+            if consequentOnes == 2:
+                print('inc\ndbl\ninc')
+            else:
+                print('inc')
+        else:
+            print('dbl\ninc\n'*consequentOnes,end='')
+           
+    # Обрабатываем последние нули
+    if consequentZeros!=0:
+        print('dbl\n'*consequentZeros,end='')
 
 printBestSequence(int(input()))
