@@ -8,95 +8,66 @@
 Сложность по памяти O(1). Т.е. дополнительной памяти для работы алгоритма не требуется.
 Реализация эффективнее, чем O(N) невозможна, т.к. для точного решения требуется пройти каждый бит числа хотя бы раз.
 """
-def printBestSequence(target):
+def printBestSequenceRefactored(target):
     if target <=0:
         return
-    
+
     consequentOnes = 0
     consequentZeros = 0
     flagLeadOne = True
     flagDecDblSequence = False
-    
+
     for length in range(target.bit_length() - 1,-1,-1):
         if (target >> length & 1) == 0:
             consequentZeros += 1
             continue
-        
+
         if consequentZeros == 0:
             consequentOnes += 1
             continue
-        
+
         if flagDecDblSequence:
+            print('dbl\n' * consequentOnes,end='')
             if consequentZeros == 1:
-                # Один ноль между последовательностями => Продолжаем
-                print('dbl\n' * (consequentOnes + 1),end="")
-                print('dec')
-                
-                consequentZeros = 0
-                consequentOnes = 1
-                continue
+                print('dbl\ndec',sep='')
             else:
-                # Заканчиваем последовательность
-                print('dbl\n' * consequentOnes,end="")
-                print('dec')
                 flagDecDblSequence = False
-        else:
-            if consequentOnes >= 3:
-                print('inc')
-                flagLeadOne = False
-                if consequentZeros == 1:
-                    print('dbl\n'*(consequentOnes+1),end="")
-                    print('dec')
-                    flagDecDblSequence = True
-                    
-                    consequentZeros = 0
-                    consequentOnes = 1
-                    continue
-                else:
-                    print('dbl\n'*consequentOnes,end="")
-                    print('dec')
-            elif flagLeadOne:
-                if consequentOnes == 2:
-                    print('inc\ndbl\ninc')
-                else:
-                    print('inc')
-                flagLeadOne = False
+                print('dec\n','dbl\n' * consequentZeros,sep='',end='')
+
+        elif consequentOnes >= 3:
+            print('inc\n','dbl\n' * consequentOnes,sep='',end='')
+            flagLeadOne = False
+
+            if consequentZeros == 1:
+                flagDecDblSequence = True
+                print('dbl\ndec',sep='')
             else:
-                if (consequentOnes == 2) and (consequentZeros==1):
-                    flagDecDblSequence = True
-                    print('inc','dbl','dbl','dbl','dec',sep="\n")
-                    
-                    consequentOnes = 1
-                    consequentZeros = 0
-                    continue;
-                else:
-                    print('dbl\ninc\n'*consequentOnes,end='')
+                print('dec\n','dbl\n' * consequentZeros,sep='',end='')
 
-        print('dbl\n'*consequentZeros,end='')
+        elif flagLeadOne:
+            print('inc\ndbl\n'*consequentOnes,'dbl\n'*(consequentZeros-1),sep='',end='')
+            flagLeadOne = False
+        elif consequentOnes == 2:
+            flagDecDblSequence = True
+            print('inc\ndbl\ndbl\ndbl\ndec',sep='')
+        else:
+            print('dbl\ninc\ndbl',sep='')
 
-        consequentOnes = 1
         consequentZeros = 0
+        consequentOnes = 1
     #end for
-    
+
     # Обрабатываем последние 1..10..0
     if flagDecDblSequence:
-        print('dbl\n' * consequentOnes,end="")
-        print('dec')
+        print('dbl\n' * consequentOnes,'dec\n',sep='',end='')
+    elif consequentOnes >= 3:
+        print('inc\n','dbl\n' * consequentOnes,'dec\n',sep='',end='')
+    elif flagLeadOne:
+        print('inc\n','dbl\ninc\n'*(consequentOnes-1),sep='',end='')
     else:
-        if consequentOnes >= 3:
-            print('inc')
-            print('dbl\n'*consequentOnes,end="")
-            print('dec')
-        elif flagLeadOne:
-            if consequentOnes == 2:
-                print('inc\ndbl\ninc')
-            else:
-                print('inc')
-        else:
-            print('dbl\ninc\n'*consequentOnes,end='')
-           
-    # Обрабатываем последние нули
-    if consequentZeros!=0:
-        print('dbl\n'*consequentZeros,end='')
+        print('dbl\ninc\n'*consequentOnes,sep='',end='')
 
-printBestSequence(int(input()))
+    # Обрабатываем последние нули
+    print('dbl\n'*consequentZeros,sep='',end='')
+
+printBestSequenceRefactored(int(input()))
