@@ -47,11 +47,11 @@ def printBestSequenceRefactored(target):
         elif flagLeadOne:
             print('inc\ndbl\n'*consequentOnes,'dbl\n'*(consequentZeros-1),sep='',end='')
             flagLeadOne = False
-        elif consequentOnes == 2:
+        elif consequentOnes == 2 and consequentZeros == 1:
             flagDecDblSequence = True
-            print('inc\ndbl\ndbl\ndbl\ndec',sep='')
+            print('inc\ndbl\ndbl\ndbl\ndec\n',sep='',end='')
         else:
-            print('dbl\ninc\ndbl',sep='')
+            print('dbl\ninc\n'*consequentOnes,'dbl\n'*consequentZeros,sep='',end='')
 
         consequentZeros = 0
         consequentOnes = 1
@@ -69,5 +69,4 @@ def printBestSequenceRefactored(target):
 
     # Обрабатываем последние нули
     print('dbl\n'*consequentZeros,sep='',end='')
-
 printBestSequenceRefactored(int(input()))
