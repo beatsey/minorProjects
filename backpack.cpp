@@ -1,27 +1,26 @@
 #include <iostream>
 #include <vector>
-#include <array>
 #include <string>
 #include <sstream>
 
 /*
-ЗАДАЧА О РЮКЗАКЕ
+Р—РђР”РђР§Рђ Рћ Р Р®РљР—РђРљР•
 
-Решить задачу о рюкзаке методом динамического программирования. Алгоритм должен быть инкапсулирован.
+Р РµС€РёС‚СЊ Р·Р°РґР°С‡Сѓ Рѕ СЂСЋРєР·Р°РєРµ РјРµС‚РѕРґРѕРј РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ. РђР»РіРѕСЂРёС‚Рј РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РёРЅРєР°РїСЃСѓР»РёСЂРѕРІР°РЅ.
 
-Формат входных данных
-Данные подаются на стандартный поток ввода. Пустые строки игнорируются.
-Первая строка содержит натуральное число - максимальную массу предметов, которую выдержит рюкзак.
-Каждая последующая содержит два неотрицательных числа: массу предмета и его стоимость.
+Р¤РѕСЂРјР°С‚ РІС…РѕРґРЅС‹С… РґР°РЅРЅС‹С…
+Р”Р°РЅРЅС‹Рµ РїРѕРґР°СЋС‚СЃСЏ РЅР° СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРѕС‚РѕРє РІРІРѕРґР°. РџСѓСЃС‚С‹Рµ СЃС‚СЂРѕРєРё РёРіРЅРѕСЂРёСЂСѓСЋС‚СЃСЏ.
+РџРµСЂРІР°СЏ СЃС‚СЂРѕРєР° СЃРѕРґРµСЂР¶РёС‚ РЅР°С‚СѓСЂР°Р»СЊРЅРѕРµ С‡РёСЃР»Рѕ - РјР°РєСЃРёРјР°Р»СЊРЅСѓСЋ РјР°СЃСЃСѓ РїСЂРµРґРјРµС‚РѕРІ, РєРѕС‚РѕСЂСѓСЋ РІС‹РґРµСЂР¶РёС‚ СЂСЋРєР·Р°Рє.
+РљР°Р¶РґР°СЏ РїРѕСЃР»РµРґСѓСЋС‰Р°СЏ СЃРѕРґРµСЂР¶РёС‚ РґРІР° РЅРµРѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С… С‡РёСЃР»Р°: РјР°СЃСЃСѓ РїСЂРµРґРјРµС‚Р° Рё РµРіРѕ СЃС‚РѕРёРјРѕСЃС‚СЊ.
 
-Формат результата
-Первая строка содержит два числа: суммарную массу предметов и их суммарную стоимость.
-В последующих строках записаны номера предметов, которые были помещены в рюкзак, в порядке возрастания номера.
-Результат работы программы выводится в стандартный поток вывода.
-В любой непонятной ситуации результатом работы любой команды будет "error".
+Р¤РѕСЂРјР°С‚ СЂРµР·СѓР»СЊС‚Р°С‚Р°
+РџРµСЂРІР°СЏ СЃС‚СЂРѕРєР° СЃРѕРґРµСЂР¶РёС‚ РґРІР° С‡РёСЃР»Р°: СЃСѓРјРјР°СЂРЅСѓСЋ РјР°СЃСЃСѓ РїСЂРµРґРјРµС‚РѕРІ Рё РёС… СЃСѓРјРјР°СЂРЅСѓСЋ СЃС‚РѕРёРјРѕСЃС‚СЊ.
+Р’ РїРѕСЃР»РµРґСѓСЋС‰РёС… СЃС‚СЂРѕРєР°С… Р·Р°РїРёСЃР°РЅС‹ РЅРѕРјРµСЂР° РїСЂРµРґРјРµС‚РѕРІ, РєРѕС‚РѕСЂС‹Рµ Р±С‹Р»Рё РїРѕРјРµС‰РµРЅС‹ РІ СЂСЋРєР·Р°Рє, РІ РїРѕСЂСЏРґРєРµ РІРѕР·СЂР°СЃС‚Р°РЅРёСЏ РЅРѕРјРµСЂР°.
+Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ РїСЂРѕРіСЂР°РјРјС‹ РІС‹РІРѕРґРёС‚СЃСЏ РІ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРѕС‚РѕРє РІС‹РІРѕРґР°.
+Р’ Р»СЋР±РѕР№ РЅРµРїРѕРЅСЏС‚РЅРѕР№ СЃРёС‚СѓР°С†РёРё СЂРµР·СѓР»СЊС‚Р°С‚РѕРј СЂР°Р±РѕС‚С‹ Р»СЋР±РѕР№ РєРѕРјР°РЅРґС‹ Р±СѓРґРµС‚ "error".
 
-Пример
-Входные данные	
+РџСЂРёРјРµСЂ
+Р’С…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ	
 165
 23 92
 31 57
@@ -34,7 +33,7 @@
 89 87
 82 72
 
-Результат работы
+Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹
 165 309
 1
 2
@@ -42,171 +41,181 @@
 4
 6
 */
+template <class T>
+struct Item {
+    T mass;
+    T value;
+    Item(T mass, T value):mass(mass), value(value) {}
+};
 
+template <class T>
+struct Result {
+    T spaceTaken;
+    T value;
+    std::vector<size_t> indices;
+    Result(T spaceTaken, T value):spaceTaken(spaceTaken), value(value) {}
+};
+
+template <class T>
+class BackpackSolver;
+
+template <class T>
+std::istream& operator>>(std::istream& istr, BackpackSolver<T>& solver) {
+
+    std::string input;
+    // РЎС‡РёС‚С‹РІР°РµРј СЂР°Р·РјРµСЂ СЂСЋРєР·Р°РєР°
+    while (std::getline(istr, input)) {
+        if (input.length() == 0)
+            continue;
+
+        char c;
+        long num;
+        std::istringstream stream(input);
+        if ((stream >> num) && (num >= 0) && !stream.get(c)) {
+            solver.bagSize = static_cast<T>(num);
+            break;
+        }
+
+        std::cout << "error" << std::endl;
+    }
+
+    // РЎС‡РёС‚С‹РІР°РµРј РїСЂРµРґРјРµС‚С‹
+    while (std::getline(istr, input)) {
+        if (input.length() == 0)
+            continue;
+
+        char c;
+        long num1, num2;
+        std::istringstream stream(input);
+
+        if ((stream >> num1) && (stream >> num2) && (num1 >= 0) && (num2 >= 0) && !stream.get(c)) {
+            solver.items.push_back({ static_cast<T>(num1), static_cast<T>(num2) });
+            continue;
+        }
+
+        std::cout << "error" << std::endl;
+    }
+
+    return istr;
+}
+
+template <class T>
 class BackpackSolver {
-    // Размер рюкзака
-    size_t bagSize;
-    // Занятое место предметами после решения задачи
-    size_t realSpaceTaken;
-    // Суммарная ценность предметов после решения задачи
-    size_t maxSumValue;
-    // Множитель для сокращения масс предметов и рюкзака
-    size_t multiplier;
 
-    // Исходные предметы
-    std::vector<std::array<int, 2>> items;
-    // Матрица для решения задачи
-    std::vector<std::vector<int>> matrix;
-    // Результирующий массив индексов предметов
-    std::vector<size_t> result;
+    // Р Р°Р·РјРµСЂ СЂСЋРєР·Р°РєР°
+    T bagSize;
 
-    // Функция читает поток ввода, добавляет предметы в items и возвращает размер рюкзака
-    void parseInput() {
-        items.clear();
+    // РњР°СЃСЃРёРІ РїСЂРµРґРјРµС‚РѕРІ
+    std::vector<Item<T>> items;
 
-        std::string input;
-        // Считываем размер рюкзака
-        while (std::getline(std::cin, input)) {
-            if (input.length() == 0)
-                continue;
+    std::vector<std::vector<T>> matrix;
 
-            char c;
-            std::istringstream stream(input);
-            if ((stream >> bagSize) && !stream.get(c)) {
-                break;
-            }
-            else {
-                std::cout << "error" << std::endl;
-            }
+    size_t getMaxCommonFactor(size_t x, size_t y) {
+        size_t tmp;
+
+        while (tmp = x % y) {
+            x = y;
+            y = tmp;
         }
 
-        // Считываем предметы
-        while (std::getline(std::cin, input)) {
-            if (input.length() == 0)
-                continue;
-
-            char c;
-            int num1, num2;
-            std::istringstream stream(input);
-
-            if ((stream >> num1) && (stream >> num2) && !stream.get(c)) {
-                items.push_back({ num1, num2 });
-                continue;
-            }
-
-            std::cout << "error" << std::endl;
-        }
+        return y;
     }
 
-    // Возвращает true, если factor является общим множителем всех масс и массы рюкзака
-    bool isCommonFactor(size_t factor) {
-        if (bagSize % factor != 0)
-            return false;
+    // РљСЂР°С‚РЅРѕ СѓРјРµРЅСЊС€Р°РµРј СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ Р·Р°РґР°С‡Рё, РїРѕРґРµР»РёРІ РЅР° РќРћР” РІСЃРµС… РјР°СЃСЃ Рё СЂР°Р·РјРµСЂР° СЂСЋРєР·Р°РєР°
+    T reduceMasses() {
+        if (bagSize == 0 || items.size() == 0) return 1;
 
-        for (size_t j = 0; j < items.size(); j++) {
-            if (items[j][0] % factor != 0)
-                return false;
+        size_t MCF = bagSize;
+        for (size_t i = 0, n = items.size(); i < n; i++) {
+            MCF = getMaxCommonFactor(items[i].mass, MCF);
+            if (MCF <= 1) return 1;
         }
 
-        return true;
-    }
-
-    // Для больших масс получается слишком много столбцов в матрице
-    // Можно найти общий множитель у всех масс и размером рюкзака и кратно уменьшить сложность задачи
-    // Функция возвращает множитель
-    size_t reduceMasses() {
-        size_t factors[] = { 1000, 100, 10, 2, 3, 5, 7 };
-
-        multiplier = 1;
-
-        if (bagSize == 0) return 1;
-
-        for (size_t i = 0, n = sizeof(factors) / sizeof(size_t); i < n; i++) {
-
-            // Сокращаем на factors[i], пока делится
-            while (isCommonFactor(factors[i])) {
-                multiplier *= factors[i];
-                bagSize /= factors[i];
-                for(size_t k = 0; k<items.size();k++)
-                    items[k][0] /= factors[i];
-            }
+        bagSize /= MCF;
+        for (size_t i = 0, n = items.size(); i < n; i++) {
+            items[i].mass /= MCF;
         }
-        
+
+        return MCF;
     }
 
-    void getMemoizeTableFromInput() {
-        // Все N предметов находятся в items
-        const size_t N = items.size();
+    void buildMemoizeTable() {
+        // Р’СЃРµ N РїСЂРµРґРјРµС‚РѕРІ РЅР°С…РѕРґСЏС‚СЃСЏ РІ items
+        std::vector<T> activeRow(bagSize + 1, 0);
 
-        std::vector<int> activeRow(bagSize + 1, 0);
-
-        matrix.resize(N + 1);
+        matrix.resize(items.size() + 1);
         matrix[0] = activeRow;
 
-        for (size_t i = 0; i < N; i++) {
-            // items[i][0] - масса; items[i][1] - стоимость
-            const int mass = items[i][0];
-            const int value = items[i][1];
-            
-            for (int j = bagSize; j >= mass; --j) {
-                const int tmp = value + activeRow[j - mass];
+        for (size_t i = 0, N = items.size(); i < N; i++) {
+            T j;
+            for (j = bagSize; j > items[i].mass; --j) {
+                const T tmp = items[i].value + activeRow[j - items[i].mass];
                 if (tmp > activeRow[j])
                     activeRow[j] = tmp;
             }
 
-            // Запомнили (копию) активной строки
+            if (j == items[i].mass) {
+                const T tmp = items[i].value + activeRow[0];
+                if (tmp > activeRow[items[i].mass])
+                    activeRow[items[i].mass] = tmp;
+            }
+            // Р—Р°РїРѕРјРЅРёР»Рё РєРѕРїРёСЋ Р°РєС‚РёРІРЅРѕР№ СЃС‚СЂРѕРєРё
             matrix[i + 1] = activeRow;
         }
     }
 
 public:
-    void solveBackPackTask() {
-        parseInput();
-        reduceMasses();
-        getMemoizeTableFromInput();
+    BackpackSolver():bagSize(0){}
+    Result<T> solve() {
+
+        // РњРЅРѕР¶РёС‚РµР»СЊ РґР»СЏ СЃРѕРєСЂР°С‰РµРЅРёСЏ РјР°СЃСЃ РїСЂРµРґРјРµС‚РѕРІ Рё СЂСЋРєР·Р°РєР°
+        T multiplier = reduceMasses();
+
+        buildMemoizeTable();
 
         const size_t N = matrix.size() - 1;
-        int bagSizeTmp = bagSize;
+        T bagSizeTmp = bagSize;
 
-        // Фиксируем максимальную стоимость предметов
-        maxSumValue = matrix[N][bagSizeTmp];
+        // РЎСѓРјРјР°СЂРЅР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ РїСЂРµРґРјРµС‚РѕРІ
+        T maxSumValue = matrix[N][bagSize];
 
-        // Идём искать влево по матрице реальную заполненность рюкзака
+        // РРґС‘Рј РёСЃРєР°С‚СЊ РІР»РµРІРѕ РїРѕ РјР°С‚СЂРёС†Рµ СЂРµР°Р»СЊРЅСѓСЋ Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚СЊ СЂСЋРєР·Р°РєР°
         while ((bagSizeTmp > 0) && (matrix[N][bagSizeTmp - 1] == maxSumValue))
             bagSizeTmp--;
 
-        // Фиксируем сколько место реально занято в рюкзаке
-        realSpaceTaken = bagSizeTmp;
 
-        // Собираем индексы добавленных предметов
-        result.clear();
+        // Р—Р°РЅРёРјР°РµРјРѕРµ РјРµСЃС‚Рѕ, СЃС‚РѕРёРјРѕСЃС‚СЊ
+        Result<T> res(bagSizeTmp * multiplier, maxSumValue);
+        
+
         for (size_t i = N; i > 0; i--) {
-            // Неравенство говорит о том, что предмет был положен в рюкзак
+            // РќРµСЂР°РІРµРЅСЃС‚РІРѕ РіРѕРІРѕСЂРёС‚ Рѕ С‚РѕРј, С‡С‚Рѕ РїСЂРµРґРјРµС‚ Р±С‹Р» РїРѕР»РѕР¶РµРЅ РІ СЂСЋРєР·Р°Рє
             if (matrix[i][bagSizeTmp] == matrix[i - 1][bagSizeTmp])
                 continue;
-            result.push_back(i);
-            bagSizeTmp -= items[i - 1][0];
+            res.indices.push_back(i);
+            bagSizeTmp -= items[i - 1].mass;
         }
 
-        // Очищаем место
-        items.clear();
         matrix.clear();
+
+        return res;
     }
 
-    void printResult() {
-        // realSpaceTaken, maxSumValue - место и стоимость предметов
-        // result - массив индексов предметов
-        std::cout << (realSpaceTaken*multiplier) << ' ' << maxSumValue << std::endl;
-        for (size_t i = result.size(); i > 0; i--) {
-            std::cout << result[i - 1] << std::endl;
-        }
-    }
-
+    friend std::istream& operator>> <T>(std::istream&, BackpackSolver<T>&);
 };
 
+template <class T>
+std::ostream& operator<<(std::ostream& stream, const Result<T>& res) {
+    stream << res.spaceTaken << ' ' << res.value << std::endl;
+    for (size_t i = res.indices.size(); i > 0; i--) {
+        std::cout << res.indices[i - 1] << std::endl;
+    }
+    return stream;
+}
 int main()
 {
-    BackpackSolver solver;
-    solver.solveBackPackTask();
-    solver.printResult();
+    BackpackSolver<size_t> solver;
+
+    std::cin >> solver;
+    std::cout << solver.solve();
 }
