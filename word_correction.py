@@ -49,43 +49,7 @@ fur -> far, for
 
 """
 
-# True, если word1 и word2 одинаковой длины отличаются не более, чем на 1 символ
-# или на два, но это транспозиция соседних символов
-def isOneCharDiffOrTranspose(word1,word2):
-    counter = 0
-    transposeFlag = False
-    for i in range(len(word1)):
-        if word1[i]!=word2[i]:
-            counter = counter + 1
-            if counter==3:
-                return False
-            if counter==2:
-                if transposeFlag:
-                    # Предыдущая ошибка была на символ ранее
-                    # Проверяем, может быть это транспозиция
-                    if word1[i-1]==word2[i] and word1[i]==word2[i-1]:
-                        continue
-                
-                return False
-            transposeFlag = True
-        else:
-            transposeFlag = False
-    return True
-
-
-def isOneCharInsertionDiff(shorter,longer):
-    diffCounter = 0
-    N = len(shorter)
-    i=0
-    while i<N:
-        if shorter[i] != longer[i+diffCounter]:
-            diffCounter = diffCounter + 1
-            if diffCounter == 2:
-                return False
-        else:
-            i = i + 1
-    return True
-
+#независимое от реализации класса с алгоритмом чтение словаря
 def readDictionary():
     N = int(input())
     dict = {}
@@ -99,7 +63,44 @@ def readDictionary():
             dict[length][word] = True
     return dict
 
-def processWord(word,dict):
+# реализация алгоритма
+def correctWord(word,dict):
+
+    def isOneCharDiffOrTranspose(word1,word2):
+        counter = 0
+        transposeFlag = False
+        for i in range(len(word1)):
+            if word1[i]!=word2[i]:
+                counter = counter + 1
+                if counter==3:
+                    return False
+                if counter==2:
+                    if transposeFlag:
+                        # Предыдущая ошибка была на символ ранее
+                        # Проверяем, может быть это транспозиция
+                        if word1[i-1]==word2[i] and word1[i]==word2[i-1]:
+                            continue
+                    
+                    return False
+                transposeFlag = True
+            else:
+                transposeFlag = False
+        return True
+
+    def isOneCharInsertionDiff(shorter,longer):
+        diffCounter = 0
+        N = len(shorter)
+        i=0
+        while i<N:
+            if shorter[i] != longer[i+diffCounter]:
+                diffCounter = diffCounter + 1
+                if diffCounter == 2:
+                    return False
+            else:
+                i = i + 1
+        return True
+
+
     wordLower = word.lower()
     length = len(word)
     lengthInDict = length in dict
@@ -126,6 +127,7 @@ def processWord(word,dict):
     result.sort()
     return result
 
+# вывод результата корректировки слова в нужном формате
 def printableResult(res,word):
     if res==True:
         return '{} - ok'.format(word)
@@ -134,6 +136,7 @@ def printableResult(res,word):
     else:
         return '{} -?'.format(word)
 
+#независимое от реализации алгоритма чтение ввода
 def processWordsFromInput(dict):
     while True:
         try:
@@ -144,7 +147,7 @@ def processWordsFromInput(dict):
             break
         
         if (len(word)!=0):
-            result = processWord(word,dict)
+            result = correctWord(word,dict)
             print(printableResult(result,word))
 
 dict = readDictionary()
