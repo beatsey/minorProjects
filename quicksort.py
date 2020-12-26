@@ -19,18 +19,22 @@
 1 2 3 4 5
 
 """
+import random
 
 def quicksort(array):
     def qsort(left,right):
-        if right<left:
+        if right<=left:
             return
 
-        l = left
-        r = right
+        num = random.randint(left, right)
+        pivot = array[num]
+        array[num],array[right]=array[right],pivot
 
-        pivot = array[r+1]
+        r = right-1
+        l = left
+
         while True:
-            for l in range(l,right+2):
+            for l in range(l,right+1):
                 if array[l]>=pivot:
                     break
 
@@ -41,17 +45,14 @@ def quicksort(array):
             if l<r:
                 array[l],array[r]=array[r],array[l]
                 l+=1
+                r-=1
             else:
-                if l==r:
-                    array[l],array[right+1]=pivot,array[l]
-
-                    qsort(left,l-2)
-                    qsort(l+1,right)
-                else:
-                    qsort(left,right-1)
+                array[l],array[right]=pivot,array[l]
+                qsort(left,l-1)
+                qsort(l+1,right)
                 return
 
-    qsort(0,len(array)-2)
+    qsort(0,len(array)-1)
 
 array = [int(X) for X in input().split(' ')]
 quicksort(array)
