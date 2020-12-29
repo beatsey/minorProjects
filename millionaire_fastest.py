@@ -104,4 +104,34 @@ def getBestSequenceFastest(target):
         result+='dbl\ninc\n'*consequentOnes
 
     # Обрабатываем последние нули
-    print(result+'dbl\n'*consequentZeros,end='')
+    return result+'dbl\n'*consequentZeros
+
+# Эквивалентный по скорости алгоритм, намного более читабельный
+def getBestSequenceFastest2(target):
+    if target <=0:
+        return ''
+        
+    result = ''
+    ones = 0
+
+    for length in range(target.bit_length()):
+        if target & 1==1:
+            ones += 1
+        elif ones==0:
+            result += '1'
+        elif ones==1:
+            result += '211'
+            ones = 0
+        else:
+            result+='0'+'1'*ones
+            ones = 1
+        
+        target = target >> 1
+    
+    if ones >= 3:
+        result+='0'+'1'*ones
+    elif ones == 2:
+        result+='21'
+    
+    result+='2'
+    return result[::-1].replace('0', 'dec\n').replace('1', 'dbl\n').replace('2', 'inc\n')
