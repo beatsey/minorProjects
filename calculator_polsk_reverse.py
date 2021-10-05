@@ -42,7 +42,7 @@ class Stack:
         self.__data.append(element)
     
     def pop(self):
-        if len(data)==0:
+        if len(self.__data)==0:
             raise CustomNoItemsException
         else:
             return self.__data.pop()
@@ -62,5 +62,6 @@ def calculate(input_string):
             operands.push(dictionary[val](operands.pop(),operands.pop()))
     
     return operands.pop()
+
 
 print(calculate(input()))
