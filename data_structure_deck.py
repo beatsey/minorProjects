@@ -87,7 +87,6 @@ class Deck:
             self.__size -= 1
             return x
 
-
 n=int(input()) # количество команд
 m=int(input()) # размер Дека
 deck = Deck(m) # создаём Дек
