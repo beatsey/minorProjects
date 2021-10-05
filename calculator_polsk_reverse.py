@@ -30,6 +30,10 @@
 38
 
 """
+class CustomNoItemsException(Exception):
+    def __init__(self):
+        pass
+
 class Stack:
     def __init__(self):
         self.__data=[]
@@ -38,7 +42,10 @@ class Stack:
         self.__data.append(element)
     
     def pop(self):
-        return self.__data.pop()
+        if len(data)==0:
+            raise CustomNoItemsException
+        else:
+            return self.__data.pop()
 
 def calculate(input_string):
     dictionary={
