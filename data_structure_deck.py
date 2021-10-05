@@ -49,6 +49,7 @@ class Deck:
         self.__head=0 # Индекс начала Дека
         self.__tail=-1 # Индекс конца Дека
         self.__size=0 # Размер очереди
+
     def is_empty(self):
         return self.__size == 0
     
@@ -64,9 +65,10 @@ class Deck:
         if self.is_empty(): # Если дек пуст, то ошибка
             raise MyError
         else:
-            print(self.__array[self.__tail])
+            x=self.__array[self.__tail]
             self.__tail = (self.__tail - 1) % self.__max_n # сдвигаем хвост на последний элемент
             self.__size -= 1
+            return x
     
     def push_front(self,element):
         if self.__size != self.__max_n: # Если есть место
@@ -80,9 +82,11 @@ class Deck:
         if self.is_empty():
             raise MyError
         else:
-            print(self.__array[self.__head])
+            x=self.__array[self.__head]
             self.__head = (self.__head + 1) % self.__max_n
             self.__size -= 1
+            return x
+
 
 n=int(input()) # количество команд
 m=int(input()) # размер Дека
@@ -91,7 +95,7 @@ for i in range(n):
     try:
         command = input().split(' ')
         if(len(command)==1):
-            getattr(deck,command[0])()
+            print(getattr(deck,command[0])())
         else:
             getattr(deck,command[0])(command[1])
     except MyError:
