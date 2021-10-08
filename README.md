@@ -2407,3 +2407,44 @@ m,n<=1000
 ()()</td>
   </tr>
 </tbody></table>
+
+---
+### Комбинации (combinations_mobile.py)
+
+На клавиатуре старых мобильных телефонов каждой цифре соответствовало несколько букв. Примерно так:
+2: 'abc'
+3: 'def'
+4: 'ghi'
+5: 'jkl'
+6: 'mno'
+7: 'pqrs'
+8: 'tuv'
+9: 'wxyz'
+
+Вам известно в каком порядке были нажаты кнопки телефона, без учёта повторов. Напечатайте все комбинации букв, которые можно набрать такой последовательностью нажатий.
+
+#### Формат входных значений
+На вход подаётся строка, состоящая из цифр 2-9 включительно. Длина строки не превосходит 10 символов.
+
+#### Формат результата
+Выведите все возможные комбинации букв через пробел.
+
+#### Примеры
+<table><tbody>
+  <tr>
+    <td><b>Входные данные</b></td>
+    <td><b>Результат работы</b></td>
+  </tr>
+  <tr>
+    <td valign='top'>23</td>
+    <td valign='top'>ad ae af bd be bf cd ce cf</td>
+  </tr>
+  <tr>
+    <td valign='top'>92</td>
+    <td valign='top'>wa wb wc xa xb xc ya yb yc za zb zc</td>
+  </tr>
+  <tr>
+    <td valign='top'>228</td>
+    <td valign='top'>aat aau aav abt abu abv act acu acv bat bau bav bbt bbu bbv bct bcu bcv cat cau cav cbt cbu cbv cct ccu ccv</td>
+  </tr>
+</tbody></table>
