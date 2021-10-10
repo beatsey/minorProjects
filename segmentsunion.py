@@ -53,10 +53,10 @@ def segmentsUnion(data):
     return newData
 
 n=int(input())
-if n>1:
+if n>=1:
     data=[]
 
     for i in range(n):
         data.append(tuple([int(x) for x in input().split(' ')]))
         
-    print('\n'.join(segmentsUnion(data)))
+    print('\n'.join(segmentsUnion(data)),end='')
