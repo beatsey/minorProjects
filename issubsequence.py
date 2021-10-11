@@ -26,6 +26,9 @@ False
 """
 def issubsequence(s,t):
     lens,lent = len(s),len(t)
+    if lens==0:
+        return True
+        
     if lens>lent:
         return False
     
