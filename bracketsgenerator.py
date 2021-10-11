@@ -28,38 +28,17 @@
 ()()
 """
 
-# Нужно доделать, согласно generatorRecursively. Выдаёт не все комбинации.
 def generator(n):
     if n<=0:
-        return ['']
-        
-    data=['()']
+        return set([''])
     
-    for j in range(1,n):
-        for i in range(len(data)):
-            data.append(data[i]+'()')
-            data[i]='('+data[i]+')'
-        
-    return data
-
-def generatorRecursively(n):
-    if n<=0:
-        return ['']
-    if n==1:
-        return ['()']
+    newData=set()
+    for i in generator(n-1):
+        newData.add('('+i+')')
+        newData.add(i+'()')
+        newData.add('()'+i)
     
-    data = generatorRecursively(n-1)
-    length = len(data)
-    
-    for i in range(length-1):
-        data.append(data[i]+'()')
-        data.append('()'+data[i])
-        data[i]='('+data[i]+')'
-    
-    data.append(data[length-1]+'()')
-    data[length-1]='('+data[length-1]+')'
-    
-    return data
+    return newData
 
 n=int(input())
-print('\n'.join(generatorRecursively(n)),end='')
+print('\n'.join(sorted(generator(n))),end='')
