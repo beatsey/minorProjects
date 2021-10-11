@@ -2666,6 +2666,18 @@ dkajsdlkbca</td>
     <td><b>Входные данные</b></td>
     <td><b>Результат работы</b></td>
   </tr>
+<tr>
+    <td valign='top'>
+2<br>
+4 51</td>
+    <td valign='top'>4 5</td>
+  </tr>
+  <tr>
+    <td valign='top'>
+5<br>
+1 1 1 1 1</td>
+    <td valign='top'>1 1 1 1 1</td>
+  </tr>
   <tr>
     <td valign='top'>
 5<br>
