@@ -2640,6 +2640,12 @@ abcd<br>
 dkajsdlkbca</td>
     <td valign='top'>False</td>
   </tr>
+  <tr>
+    <td valign='top'>
+<br>
+anystring</td>
+    <td valign='top'>True</td>
+  </tr>
 </tbody></table>
 
 ---
