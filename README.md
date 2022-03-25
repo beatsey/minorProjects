@@ -3423,5 +3423,46 @@ B op2 C = res2
 <br>
 
 Структура <b>struct</b> tree (<b>int</b> x; <b>struct</b> tree *left, *right, *parent;); описывает двоичное дерево поиска. Напишите функцию <b>void</b> ins (<b>struct</b> tree *t, <b>int</b> x), вставляющую в дерево поиска t, заведомо содержащее ключ x, элемент с ключом, на единицу меньшим следующего по размеру за x ключа в дереве, либо с ключом x+1, если x - максимальный элемент дерева. Гарантируется, что ключ, который нужно вставлять, не содержится в дереве.
+</details>
 
+---
+
+<details>
+<summary>
+<b>Dual linked list (dualLinkedListTemplate.cpp)</b>
+</summary>
+<br>
+
+Develop a template of a container class, that represents an abstract data type of dual linked list.
+This class should contain random access iterator and have the following interface:
+Constructor
+Destructor
+Operator=
+Iterators:
+begin           return iterator to beginning
+end             return iterator to end
+rbegin          return reverse iterator to reverse beginning
+rend            return reverse iterator to reverse end
+Capacity:
+empty           test whether container is empty
+size            return size
+Element access:
+front           access first element
+back            access last element
+Modifiers:
+assign          assign new content to container
+push_front      insert element at beginning
+pop_front       delete first element
+push_back       add element at the end
+pop_back        delete last element
+insert          insert element x at index idx
+erase           erase element
+swap            swap content
+resize          change size
+clear           clear
+Operations:     
+reverse         reverse the order of elements
+
+It is forbidden to use std::iterator.
+Demonstrate work of the implemented methods in the main function.
 </details>
