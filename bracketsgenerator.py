@@ -75,3 +75,36 @@ def generator(n):
 
 n=int(input())
 print('\n'.join(sorted(generator(n))),end='')
+
+"""
+Аналогичная задача на leetcode:
+https://leetcode.com/problems/generate-parentheses/
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+Example 1:
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+
+Example 2:
+Input: n = 1
+Output: ["()"]
+ 
+Constraints:
+1 <= n <= 8
+"""
+
+def generateParenthesis(n):
+    def gen(n, open_brackets, prefix, llist):
+        if n==1:
+            llist.append(prefix+')')
+            return
+
+        if n>open_brackets:
+            gen(n-1, open_brackets+1, prefix+'(', llist)
+
+        if open_brackets>0:
+            gen(n-1, open_brackets-1, prefix+')', llist)
+
+    llist = []
+    gen(2 * n, 0, '', llist)
+    return llist
+# print(generateParenthesis(n))
