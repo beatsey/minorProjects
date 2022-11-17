@@ -3765,4 +3765,71 @@ Demonstrate work of the implemented methods in the main function.
 </tbody></table>
 </details>
 
+
+
+---
+
+<details>
+<summary>
+<b>Стабильная сортировка (stable_quicksort.cpp)</b>
+</summary>
+<br>
+
+Требуется реализовать стабильную сортировку для следующей задачи.
+Выведите фамилии и имена абитуриентов, подавших документы на поступление в ВУЗ в порядке убывания их среднего балла по ЕГЭ.
+
+Про каждого ученика известны их фамилии, имена и баллы ЕГЭ по следующим предметам:
+информатика, математика и русский язык.
+
+#### Формат входных данных
+В первой строке идет число N (1<=N<=10^5) - количество абитуриентов, подавших документы.
+Далее идет N строк - описания ученика в формате "surname name inf_points math_points rus_points", где "surname" - строки длины не более 40, "*_points" - баллы за экзамены (целые числа от нуля до ста включительно).
+
+#### Формат результата
+Необходимо вывести пары фамилия - имя по одной на строке, разделяя фамилию и имя одним пробелом. Выводить баллы не нужно. Если несколько учащихся имеют одинаковые средние баллы, то их нужно выводить в порядке, заданном во входных данных.
+
+#### Примеры
+<table><tbody>
+  <tr>
+    <td><b>Входные данные</b></td>
+    <td><b>Результат работы</b></td>
+  </tr>
+  <tr>
+    <td valign='top'>
+2<br>
+Markov Alexander 100 99 98<br>
+Ivanov Ivan 99 98 98</td>
+    <td valign='top'>
+Markov Alexander<br>
+Ivanov Ivan</td>
+  </tr>
+  <tr>
+      <td valign='top'>
+3<br>
+Markov Alexander 75 90 90<br>
+Sergey Petrov 100 50 100<br>
+Petrov Petr 99 94 71</td>
+    <td valign='top'>
+Petrov Petr<br>
+Markov Alexander<br>
+Sergey Petrov</td>
+  </tr>
+  <tr>
+      <td valign='top'>
+6<br>
+A A 90 90 90<br>
+B B 90 90 90<br>
+C C 90 90 90<br>
+D D 90 90 90<br>
+E E 90 90 90<br>
+F F 90 90 90</td>
+    <td valign='top'>
+A A<br>
+B B<br>
+C C<br>
+D D<br>
+E E<br>
+F F</td>
+  </tr>
+</tbody></table>
 </details>
