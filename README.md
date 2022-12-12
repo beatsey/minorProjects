@@ -4251,8 +4251,45 @@ m - число дорог, n - число полос
     <td valign='top'>108206580836328381</td>
   </tr>
 </tbody></table>
-</details>
 
+#### Примечания
+В первом примере возможны следующие варианты знаков "движение по полосам":
+
+<table><tbody>
+  <tr>
+    <td><b>С левой полосы</b></td>
+    <td><b>С правой полосы</b></td>
+  </tr>
+  <tr>
+    <td valign='top'>разворот</td>
+    <td valign='top'>разворот, налево, прямо, направо</td>
+  </tr>
+  <tr>
+    <td valign='top'>разворот</td>
+    <td valign='top'>налево, прямо, направо</td>
+  </tr>
+  <tr>
+    <td valign='top'>разворот, налево</td>
+    <td valign='top'>налево, прямо, направо</td>
+  </tr>
+  <tr>
+    <td valign='top'>разворот, налево</td>
+    <td valign='top'>прямо, направо</td>
+  </tr>
+  <tr>
+    <td valign='top'>разворот, налево, прямо</td>
+    <td valign='top'>прямо, направо</td>
+  </tr>
+  <tr>
+    <td valign='top'>разворот, налево, прямо</td>
+    <td valign='top'>направо</td>
+  </tr>
+  <tr>
+    <td valign='top'>разворот, налево, прямо, направо</td>
+    <td valign='top'>направо</td>
+  </tr>
+</tbody></table>
+</details>
 
 ---
 
