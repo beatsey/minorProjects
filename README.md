@@ -4461,3 +4461,65 @@ m - число дорог, n - число полос
   </tr>
 </tbody></table>
 </details>
+
+
+---
+
+<details>
+<summary>
+<b>Нормализация UNIX пути (unixpath.cpp)</b>
+</summary>
+<br>
+
+В этой задаче нужно написать функцию, которая приводит к нормализованному виду строку, представляющую собой [путь к файлу или директории](https://www.geeksforgeeks.org/absolute-relative-pathnames-unix/) в UNIX-подобной операционной системе.
+
+Нормализация пути заключается в приведении к абсолютному пути и избавлении от следующих элементов:
+- `/` в конце пути
+- `.` - текущая директория
+- `..` - родительская директория
+- `//` - равносильно `/`
+	
+#### Формат входных данных
+На вход подается текущая директория `current_working_dir` (абсолютный путь, т.е. начинающийся с `/`) и путь `path`, который может быть как абсолютным, так и относительным. 
+ 
+#### Формат результата
+Надо вернуть нормализованный абсолютный путь, которому соответсвует `path`.
+
+#### Примеры
+<table><tbody>
+  <tr>
+    <td><b>Входные данные</b></td>
+    <td><b>Результат работы</b></td>
+  </tr>
+  <tr>
+    <td valign='top'>
+NormalizePath("/", ".")</td>
+    <td valign='top'>/</td>
+  </tr>
+  <tr>
+    <td valign='top'>
+NormalizePath("/home/user1", "../user2")</td>
+    <td valign='top'>/home/user2</td>
+  </tr>
+  <tr>
+    <td valign='top'>
+NormalizePath("/", "..")</td>
+    <td valign='top'>/</td>
+  </tr>
+  <tr>
+    <td valign='top'>
+NormalizePath("/home", "../../tmp")</td>
+    <td valign='top'>/tmp</td>
+  </tr>
+  <tr>
+    <td valign='top'>
+NormalizePath("/", "../../a/")</td>
+    <td valign='top'>/a</td>
+  </tr>
+  <tr>
+    <td valign='top'>
+NormalizePath("/", ".././/././/./../b/././././././")</td>
+    <td valign='top'>/b</td>
+  </tr>
+</tbody></table>
+</details>
